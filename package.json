@@ -1,64 +1,49 @@
 {
   "name": "sanitize",
-  "description": "Input validation and sanitization",
   "version": "1.0.0",
-  "homepage": "https://github.com/Madhu-Buyyanapragada/Sanitize.git",
-  "files": [
-    "index.js",
-    "lib",
-    "README.md",
-    "LICENCE",
-    "sanitize.js",
-    "sanitize.min.js"
-  ],
-  "keywords": [
-    "validator",
-    "validation",
-    "validate",
-    "sanitization",
-    "sanitize",
-    "sanitisation",
-    "sanitise",
-    "assert"
-  ],
-  "author": {
-    "name": "MadhuB",
-    "email": "madhu.buyyanapragada@gmail.com"
-  },
+  "description": "Input validation and sanitization",
   "main": "index.js",
+  "devDependencies": {
+	    "babel-cli": "^6.5.1",
+	    "babel-plugin-add-module-exports": "^0.1.2",
+	    "babel-preset-es2015": "^6.5.0",
+	    "babel-preset-es2015-rollup": "^1.1.1",
+	    "coveralls": "latest",
+	    "eslint": "^2.2.0",
+	    "eslint-config-airbnb": "^6.0.0",
+	    "istanbul": "latest",
+	    "mocha": "latest",
+	    "rollup": "^0.25.4",
+	    "rollup-plugin-babel": "^2.3.9",
+	    "uglify-js": "latest"
+	  },
+  "scripts": {
+	  "lint": "eslint src test",
+	    "clean:node": "rm -rf index.js lib",
+	    "clean:browser": "rm -rf sanitize*.js",
+	    "clean": "npm run clean:node && npm run clean:browser",
+	    "minify": "uglifyjs sanitize.js -o sanitize.min.js  --compress --mangle --comments '/Copyright/'",
+	    "build:browser": "babel-node build-browser && npm run minify",
+	    "build:node": "babel src -d . --presets es2015 --plugins add-module-exports",
+	    "build": "npm run build:browser && npm run build:node",
+	    "pretest": "npm run lint && npm run build",
+	    "test": "node ./node_modules/.bin/_mocha --reporter spec",
+	    "coveralls": "istanbul cover _mocha --report lcovonly -x validator.js -- -R spec && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Madhu-Buyyanapragada/Sanitize.git
+    "url": "git+https://github.com/Madhu-Buyyanapragada/Sanitize.git"
   },
-  "devDependencies": {
-    "babel-cli": "^6.5.1",
-    "babel-plugin-add-module-exports": "^0.1.2",
-    "babel-preset-es2015": "^6.5.0",
-    "babel-preset-es2015-rollup": "^1.1.1",
-    "coveralls": "latest",
-    "eslint": "^2.2.0",
-    "eslint-config-airbnb": "^6.0.0",
-    "istanbul": "latest",
-    "mocha": "latest",
-    "rollup": "^0.25.4",
-    "rollup-plugin-babel": "^2.3.9",
-    "uglify-js": "latest"
+  "keywords": [
+    "sanitize",
+    "sanitizer",
+    "validate",
+    "validator"
+  ],
+  "author": "madhu-b <madhu.buyyanapragada@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Madhu-Buyyanapragada/Sanitize/issues"
   },
-  "scripts": {
-    "lint": "eslint src test",
-    "clean:node": "rm -rf index.js lib",
-    "clean:browser": "rm -rf validator*.js",
-    "clean": "npm run clean:node && npm run clean:browser",
-    "minify": "uglifyjs validator.js -o validator.min.js  --compress --mangle --comments '/Copyright/'",
-    "build:browser": "babel-node build-browser && npm run minify",
-    "build:node": "babel src -d . --presets es2015 --plugins add-module-exports",
-    "build": "npm run build:browser && npm run build:node",
-    "pretest": "npm run lint && npm run build",
-    "test": "node ./node_modules/.bin/_mocha --reporter spec",
-    "coveralls": "istanbul cover _mocha --report lcovonly -x validator.js -- -R spec && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage"
-  },
-  "engines": {
-    "node": ">= 0.10"
-  },
-  "license": "MIT"
-   }
+  "homepage": "https://github.com/Madhu-Buyyanapragada/Sanitize#readme"
+}
